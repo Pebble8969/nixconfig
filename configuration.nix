@@ -113,12 +113,12 @@
     prismlauncher
     itch
     dwarf-fortress
-    kdenlive
     htop
     mc
     cmatrix
     classicube
     wineWowPackages.stable
+    kdePackages.kdenlive
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
