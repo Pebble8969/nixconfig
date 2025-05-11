@@ -61,7 +61,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -83,10 +83,21 @@
   users.users.pebble = {
     isNormalUser = true;
     description = "Pebble";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
     packages = with pkgs; [
       thunderbird
       vesktop
+      gimp
+      krita
+      vlc
+      prismlauncher
+      spotify
+      classicube
+      dwarf-fortress
+      rogue
+      kdePackages.kdenlive
+      openrgb
+      oneko
     ];
   };
 
@@ -102,23 +113,17 @@
     vim
     wget
     gnome-terminal
-    vlc
     fastfetch
-    gimp
-    krita
     cmatrix
-    spotify
     python3
-    jdk8
-    prismlauncher
     itch
-    dwarf-fortress
     htop
     mc
     cmatrix
-    classicube
     wineWowPackages.stable
-    kdePackages.kdenlive
+    git
+    vscode
+    gcc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -132,8 +137,9 @@
   # List services that you want to enable:
   services.flatpak.enable = true;
 
-  # Dockerstuffs
+  # Virtualisationstuffs
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
