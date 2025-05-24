@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "NixStation"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -93,7 +93,6 @@
       prismlauncher
       spotify
       classicube
-      dwarf-fortress
       rogue
       kdePackages.kdenlive
       openrgb
@@ -113,25 +112,17 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-    gnome-terminal
     fastfetch
     cmatrix
     python3
-    itch
     htop
     mc
     cmatrix
-    wineWowPackages.stable
     git
     vscode
     gcc
     alacritty
     waybar
-    wofi
-    hyprshot
-    hyprpaper
-    hyprlock
-    hyprlang
     swaynotificationcenter
   ];
 
@@ -147,8 +138,8 @@
   services.flatpak.enable = true;
 
   # Virtualisationstuffs
-  virtualisation.docker.enable = true;
-  virtualisation.virtualbox.host.enable = true;
+  # virtualisation.docker.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -160,7 +151,7 @@
   # networking.firewall.enable = false;
 
   # Experimental stuffs
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
