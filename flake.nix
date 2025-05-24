@@ -1,23 +1,12 @@
 {
-  description = "99p with flake";
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-
-    #home-manager = {
-    #  url = "github:nix-community/home-manager";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
-
-  outputs = { self, nixpkgs, ... }@inputs: {
-    # The host with the hostname `my-nixos` will use this configuration
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs }: {
+    # replace 'joes-desktop' with your hostname here.
+    nixosConfigurations.NixStation = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-      ];
+      modules = [ ./configuration.nix ];
     };
   };
-
 }
