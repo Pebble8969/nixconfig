@@ -133,6 +133,11 @@
     alacritty
     waybar
     swaynotificationcenter
+    gnome-tweaks
+    sassc
+    gtk-engine-murrine
+    gnome-themes-extra
+    python3Packages.scikit-learn
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
