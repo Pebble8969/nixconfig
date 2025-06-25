@@ -43,11 +43,11 @@
   };
 
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   environment.gnome.excludePackages = with pkgs.gnome; [
     pkgs.epiphany # web browser
@@ -177,6 +177,38 @@
   #   enableSSHSupport = true;
   # };
 
+  # Power Management stuff
+  services.logind.lidSwitch = "suspend";
+  services.logind.lidSwitchExternalPower = "lock";
+  services.logind.lidSwitchDocked = "ignore";
+
+  powerManagement.enable = true;
+  services.thermald.enable = true;
+
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 20;
+
+      # Optional helps save long term battery health
+      START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
+      STOP_CHARGE_THRESH_BAT0 = 80;  # 80 and above it stops charging
+    };
+  };
+
+  powerManagement.powertop.enable = true;
+
+  services.power-profiles-daemon.enable = false;
+
   # List services that you want to enable:
   # services.flatpak.enable = true;
 
@@ -210,22 +242,22 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  ## services.xserver.videoDrivers = ["nvidia"];
 
-  hardware.nvidia = {
+  ## hardware.nvidia = {
 
     # Modesetting is required.
-    modesetting.enable = true;
+    ## modesetting.enable = true;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
     # of just the bare essentials.
-    powerManagement.enable = false;
+    ## powerManagement.enable = false;
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
+    ## powerManagement.finegrained = false;
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
@@ -233,13 +265,13 @@
     # supported GPUs is at: 
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
     # Only available from driver 515.43.04+
-    open = false;
+    ## open = false;
 
     # Enable the Nvidia settings menu,
-    nvidiaSettings = true;
+    ## nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    ## package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
 }
