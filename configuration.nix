@@ -43,11 +43,11 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   environment.gnome.excludePackages = with pkgs.gnome; [
     pkgs.epiphany # web browser
@@ -56,12 +56,17 @@
     pkgs.gnome-contacts
     pkgs.gnome-maps
     pkgs.gnome-console
-  ]; 
+  ];
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "gb";
     variant = "";
   };
+
+  # AppImage
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
 
   # Configure console keymap
   console.keyMap = "uk";
@@ -92,21 +97,39 @@
   users.users.pebble = {
     isNormalUser = true;
     description = "Pebble";
-    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers" "libvirtd" ];
     packages = with pkgs; [
+      # Regular Packages
       thunderbird
       vesktop
-      gimp
+      gimp3
       krita
       vlc
+      (vscode-with-extensions.override {
+        vscodeExtensions = with vscode-extensions; [
+          bbenoist.nix
+          ms-python.python
+          llvm-vs-code-extensions.vscode-clangd
+          ms-vscode.cpptools
+          zainchen.json
+          formulahendry.code-runner
+        ];
+      })
+      bolt-launcher
       prismlauncher
       spotify
+      gnome-boxes
       classicube
       rogue
       kdePackages.kdenlive
       openrgb
       oneko
       github-desktop
+      bottles
+      tor-browser
+      teams-for-linux
+      # Gnome Extensions
+      pkgs.gnomeExtensions.status-icons
     ];
   };
 
@@ -128,17 +151,23 @@
     mc
     cmatrix
     git
-    vscode
     gcc
     alacritty
-    waybar
-    swaynotificationcenter
     gnome-tweaks
-    sassc
-    gtk-engine-murrine
-    gnome-themes-extra
-    python3Packages.scikit-learn
+    glfw
+    mpvpaper
+    distcc
   ];
+
+  # Steam Stuff
+  programs.steam = {
+  enable = true;
+  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
+  programs.steam.gamescopeSession.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -152,8 +181,8 @@
   # services.flatpak.enable = true;
 
   # Virtualisationstuffs
-  # virtualisation.docker.enable = true;
-  # virtualisation.virtualbox.host.enable = true;
+  virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -213,13 +242,5 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
-  programs.steam.gamescopeSession.enable = true;
-
 }
+
