@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "NixStation"; # Define your hostname.
+  networking.hostName = "NixPad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -23,6 +23,10 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  # Bluetooth stuff
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -43,20 +47,30 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
-  environment.gnome.excludePackages = with pkgs.gnome; [
-    pkgs.epiphany # web browser
-    pkgs.totem # video player
-    pkgs.geary # email client
-    pkgs.gnome-contacts
-    pkgs.gnome-maps
-    pkgs.gnome-console
-  ];
+  # environment.gnome.excludePackages = with pkgs.gnome; [
+  #   pkgs.epiphany # web browser
+  #   pkgs.totem # video player
+  #   pkgs.geary # email client
+  #   pkgs.gnome-contacts
+  #   pkgs.gnome-maps
+  #   pkgs.gnome-console
+  # ];
+
+  # Enable the gnome-keyring secrets vault. 
+  # Will be exposed through DBus to programs willing to store secrets.
+  services.gnome.gnome-keyring.enable = true;
+
+  # enable Sway window manager
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -65,8 +79,8 @@
   };
 
   # AppImage
-  programs.appimage.enable = true;
-  programs.appimage.binfmt = true;
+  # programs.appimage.enable = true;
+  # programs.appimage.binfmt = true;
 
   # Configure console keymap
   console.keyMap = "uk";
@@ -115,26 +129,32 @@
           formulahendry.code-runner
         ];
       })
-      bolt-launcher
-      prismlauncher
       spotify
       gnome-boxes
       classicube
       rogue
       kdePackages.kdenlive
-      openrgb
-      oneko
-      github-desktop
-      bottles
       tor-browser
       teams-for-linux
-      # Gnome Extensions
-      pkgs.gnomeExtensions.status-icons
+      brightnessctl
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Thunar Stuffs
+  programs.thunar.enable = true;
+  programs.xfconf.enable = true;
+
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin # Requires an Archive manager like file-roller, ark, etc
+    thunar-volman
+  ];
+
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -154,9 +174,16 @@
     gcc
     alacritty
     gnome-tweaks
-    glfw
-    mpvpaper
     distcc
+    grim
+    slurp
+    wl-clipboard
+    mako
+    network-manager-applet
+    i3status
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
   ];
 
   # Steam Stuff
@@ -197,7 +224,7 @@
       CPU_MIN_PERF_ON_AC = 0;
       CPU_MAX_PERF_ON_AC = 100;
       CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 20;
+      CPU_MAX_PERF_ON_BAT = 50;
 
       # Optional helps save long term battery health
       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
@@ -226,7 +253,7 @@
   # networking.firewall.enable = false;
 
   # Experimental stuffs
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  #### nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
