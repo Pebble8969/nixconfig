@@ -143,6 +143,14 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+  # XWayland
+  programs.xwayland.enable = true;
+
+  # xdg-desktop-portal stuffs
+  programs.xdg-desktop-portal.enable = true;
+  programs.xdg-desktop-portal-gtk.enable = true;
+  programs.xdg-desktop-portal-wlr.enable = true;
+
   # Thunar Stuffs
   programs.thunar.enable = true;
   programs.xfconf.enable = true;
@@ -181,9 +189,9 @@
     mako
     network-manager-applet
     i3status
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-wlr
+    # xdg-desktop-portal
+    # xdg-desktop-portal-gtk
+    # xdg-desktop-portal-wlr
   ];
 
   # Steam Stuff
