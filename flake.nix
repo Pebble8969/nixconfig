@@ -4,7 +4,7 @@
   };
   outputs = { self, nixpkgs }: {
     # replace 'joes-desktop' with your hostname here.
-    nixosConfigurations.NixStation = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.NixPad = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [ ./configuration.nix ];
     };
