@@ -47,30 +47,30 @@
   };
 
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
-  # environment.gnome.excludePackages = with pkgs.gnome; [
-  #   pkgs.epiphany # web browser
-  #   pkgs.totem # video player
-  #   pkgs.geary # email client
-  #   pkgs.gnome-contacts
-  #   pkgs.gnome-maps
-  #   pkgs.gnome-console
-  # ];
+  environment.gnome.excludePackages = with pkgs.gnome; [
+    pkgs.epiphany # web browser
+    pkgs.totem # video player
+    pkgs.geary # email client
+    pkgs.gnome-contacts
+    pkgs.gnome-maps
+    pkgs.gnome-console
+  ];
 
   # Enable the gnome-keyring secrets vault. 
   # Will be exposed through DBus to programs willing to store secrets.
   services.gnome.gnome-keyring.enable = true;
 
   # enable Sway window manager
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
+  # programs.sway = {
+  #   enable = true;
+  #   wrapperFeatures.gtk = true;
+  # };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -136,7 +136,7 @@
       kdePackages.kdenlive
       tor-browser
       teams-for-linux
-      brightnessctl
+      # brightnessctl
     ];
   };
 
@@ -144,24 +144,24 @@
   programs.firefox.enable = true;
 
   # XWayland
-  programs.xwayland.enable = true;
+  # programs.xwayland.enable = true;
 
   # xdg-desktop-portal stuffs
-  programs.xdg-desktop-portal.enable = true;
-  programs.xdg-desktop-portal-gtk.enable = true;
-  programs.xdg-desktop-portal-wlr.enable = true;
+  # programs.xdg-desktop-portal.enable = true;
+  # programs.xdg-desktop-portal-gtk.enable = true;
+  # programs.xdg-desktop-portal-wlr.enable = true;
 
   # Thunar Stuffs
-  programs.thunar.enable = true;
-  programs.xfconf.enable = true;
+  # programs.thunar.enable = true;
+  # programs.xfconf.enable = true;
 
-  programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin # Requires an Archive manager like file-roller, ark, etc
-    thunar-volman
-  ];
+  # programs.thunar.plugins = with pkgs.xfce; [
+  #   thunar-archive-plugin # Requires an Archive manager like file-roller, ark, etc
+  #   thunar-volman
+  # ];
 
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
+  # services.gvfs.enable = true; # Mount, trash, and other functionalities
+  # services.tumbler.enable = true; # Thumbnail support for images
 
 
   # Allow unfree packages
@@ -183,12 +183,12 @@
     alacritty
     gnome-tweaks
     distcc
-    grim
-    slurp
-    wl-clipboard
-    mako
+    # grim
+    # slurp
+    # wl-clipboard
+    # mako
     network-manager-applet
-    i3status
+    # i3status
     # xdg-desktop-portal
     # xdg-desktop-portal-gtk
     # xdg-desktop-portal-wlr
